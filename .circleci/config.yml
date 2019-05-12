@@ -99,9 +99,6 @@ jobs:
             git commit -m "ready for development: $DEV_VERSION"
             git push origin develop
 
-            # clean up release branch
-            git push origin :${CIRCLE_BRANCH}
-
 workflows:
   version: 2
   build-and-deploy:
