@@ -78,7 +78,9 @@ jobs:
             git checkout master
             git merge --no-edit ${CIRCLE_BRANCH}
 
-            echo ${ENCODED_PRIVATE_KEY} | base64 -d | ssh-add
+            echo ${ENCODED_PRIVATE_KEY} | base64 -d > ~/.ssh/secure-key
+            chmod 0600 ~/.ssh/secure-key
+            export GIT_SSH="ssh -i ~/.ssh/secure-key"
 
             git push origin master --tags
 
