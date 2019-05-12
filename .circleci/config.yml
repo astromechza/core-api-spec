@@ -66,8 +66,8 @@ jobs:
             sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$NEW_VERSION</revision>," pom.xml
 
             # setup git
-            git config user.name "Release Script"
-            git config user.email "dummy@aurelian.one"
+            git config user.name "aurelian-one-bot [Via CircleCI]"
+            git config user.email "aurelian-one-bot@ben.meierhost.com"
 
             # commit and tag
             git add pom.xml
