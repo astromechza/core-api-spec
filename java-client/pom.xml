@@ -112,7 +112,7 @@
                                 <invokerPackage>one.aurelian.client</invokerPackage>
                                 <apiPackage>one.aurelian.client.api</apiPackage>
                                 <modelPackage>one.aurelian.client.model</modelPackage>
-
+                                <strictSpec>true</strictSpec>
                                 <library>jersey2</library>
                                 <java8>true</java8>
                                 <dateLibrary>java8</dateLibrary>
