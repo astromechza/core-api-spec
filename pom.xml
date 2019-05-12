@@ -43,9 +43,6 @@
                             <tasks>
                                 <delete dir="artifacts"/>
                                 <mkdir dir="artifacts"/>
-                                <copy todir="artifacts">
-                                    <files><include name="schema/src/main/resources/schema.yaml"/></files>
-                                </copy>
                             </tasks>
                         </configuration>
                     </execution>
