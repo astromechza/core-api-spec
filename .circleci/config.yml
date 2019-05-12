@@ -77,6 +77,9 @@ jobs:
             # land on master and publish
             git checkout master
             git merge --no-edit release
+
+            echo $ENCODED_PRIVATE_KEY | base64 -d | ssh-add
+
             git push origin master --tags
 
             # increment minor version number
@@ -104,6 +107,7 @@ workflows:
       - release:
           requires:
             - build
+          context: aurelian-one-bot
           filters:
             branches:
-              only: /^release$/
+              only: /^release.*$/
