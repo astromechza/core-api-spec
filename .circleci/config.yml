@@ -63,7 +63,7 @@ jobs:
             mvn versions:use-releases
 
             # write release version to POM
-            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$NEW_VERSION</revision>,"
+            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$NEW_VERSION</revision>," pom.xml
 
             # setup git
             git config user.name "Release Script"
@@ -94,7 +94,7 @@ jobs:
             # ready development branch
             git checkout develop
             git merge --no-edit ${CIRCLE_BRANCH}
-            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$DEV_VERSION</revision>,"
+            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$DEV_VERSION</revision>," pom.xml
             git add pom.xml
             git commit -m "ready for development: $DEV_VERSION"
             git push origin develop
