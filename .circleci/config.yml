@@ -54,7 +54,7 @@ jobs:
           command: |
             # assemble current and new version numbers
             OLD_VERSION=$(mvn -q \
-              -Dexec.executable="echo" -Dexec.args='${project.version}' \
+              -Dexec.executable="echo" -Dexec.args='${revision}' \
               --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
             NEW_VERSION="${OLD_VERSION/-SNAPSHOT/}"
             echo "Releasing $OLD_VERSION as $NEW_VERSION"
@@ -63,7 +63,7 @@ jobs:
             mvn versions:use-releases
 
             # write release version to POM
-            mvn versions:set -DnewVersion="$NEW_VERSION"
+            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$NEW_VERSION</revision>," pom.xml
 
             # setup git
             git config user.name "Release Script"
@@ -94,7 +94,7 @@ jobs:
             # ready development branch
             git checkout develop
             git merge --no-edit ${CIRCLE_BRANCH}
-            mvn versions:set -DnewVersion="$DEV_VERSION"
+            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$DEV_VERSION</revision>," pom.xml
             git add pom.xml
             git commit -m "ready for development: $DEV_VERSION"
             git push origin develop
