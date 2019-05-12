@@ -80,7 +80,7 @@ jobs:
 
             echo ${ENCODED_PRIVATE_KEY} | base64 -d > ~/.ssh/secure-key
             chmod 0600 ~/.ssh/secure-key
-            export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/secure-key"
+            export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/secure-key -vvv"
 
             git push origin master --tags
 
