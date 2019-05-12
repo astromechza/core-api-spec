@@ -88,8 +88,9 @@ jobs:
             # increment minor version number
             MAJ_VERSION=$(echo "$NEW_VERSION" | cut -d '.' -f 1)
             MIN_VERSION=$(echo "$NEW_VERSION" | cut -d '.' -f 2)
-            NEW_MINOR=$(($MIN_VERSION + 1))
-            DEV_VERSION="$MAJ_VERSION.$NEW_MINOR-SNAPSHOT"
+            PATCH_VERSION=$(echo "$NEW_VERSION" | cut -d '.' -f 3)
+            NEW_PATCH=$(($PATCH_VERSION + 1))
+            DEV_VERSION="$MAJ_VERSION.$MIN_VERSION.$NEW_PATCH-SNAPSHOT"
 
             # ready development branch
             git checkout develop
