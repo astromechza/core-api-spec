@@ -71,7 +71,7 @@ jobs:
 
             # commit and tag
             git add pom.xml
-            git commit -m "release: $NEW_VERSION"
+            git commit -m "Release: $NEW_VERSION"
             git tag "$NEW_VERSION"
 
             # land on master and publish
@@ -97,7 +97,7 @@ jobs:
             git merge --no-edit ${CIRCLE_BRANCH}
             sed -i "s,<revision>$NEW_VERSION</revision>,<revision>$DEV_VERSION</revision>," pom.xml
             git add pom.xml
-            git commit -m "ready for development: $DEV_VERSION"
+            git commit -m "Changed: bumped pom version to $DEV_VERSION"
             git push origin develop
 
 workflows:
