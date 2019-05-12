@@ -33,13 +33,6 @@
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <inherited>false</inherited>
-                <dependencies>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>core-api-schema</artifactId>
-                        <version>${project.parent.version}</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
                         <goals>
@@ -51,9 +44,6 @@
                                 <delete dir="artifacts"/>
                                 <mkdir dir="artifacts"/>
                                 <copy todir="artifacts">
-                                    <fileset dir="java-client/target/">
-                                        <include name="*.jar"/>
-                                    </fileset>
                                     <files><include name="schema/src/main/resources/schema.yaml"/></files>
                                 </copy>
                             </tasks>
