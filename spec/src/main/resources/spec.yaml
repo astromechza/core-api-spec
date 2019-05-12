@@ -1,0 +1,202 @@
+openapi: 3.0.1
+info:
+  title: Core Api for the Aurelian project
+  description: |
+    This specification details the main API for the Aurelian project and its related sub-projects.
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+externalDocs:
+  description: Project Docs
+  url: 'https://aurelian.one'
+tags:
+  - name: transaction
+    description: Everything about individual transactions
+  - name: account
+    description: Everything about account aggregations
+paths:
+  /transactions:
+    get:
+      tags:
+        - transaction
+      summary: List transactions
+      operationId: listTransactions
+      parameters:
+        - name: filterByAffectedAccountPrefix
+          in: query
+          description: A prefix to match transaction entries on
+          schema:
+            type: string
+            example: assets.bank
+        - name: filterByOccurredAfter
+          in: query
+          description: Only include transactions that occur after the given time
+          schema:
+            type: string
+            format: date-time
+        - name: filterByOccurredBefore
+          in: query
+          description: Only include transactions that occur before the given time
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+                minItems: 0
+        '400':
+          description: Invalid request
+          content: {}
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - transaction
+      summary: Get a specific transaction by its id
+      operationId: getTransaction
+      parameters:
+        - name: transactionId
+          in: path
+          description: The transaction id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Not found
+          content: {}
+  /accountHistory:
+    get:
+      tags:
+        - account
+      summary: Get the history of an account
+      operationId: listAccountHistory
+      parameters:
+        - name: accountId
+          in: query
+          description: The accountId to fetch history for
+          required: true
+          example: assets.bank
+          schema:
+            type: string
+            format: uuid
+        - name: filterByOccurredAfter
+          in: query
+          description: Only include transactions that occur after the given time
+          schema:
+            type: string
+            format: date-time
+        - name: filterByOccurredBefore
+          in: query
+          description: Only include transactions that occur before the given time
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountHistory'
+        '400':
+          description: Bad request
+          content: {}
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          description: The unique ID for this transaction
+          type: string
+          format: uuid
+          readOnly: true
+        timeCreated:
+          description: The time at which this transaction was added to the datasource
+          type: string
+          format: date-time
+          readOnly: true
+        timeOccurred:
+          description: The time at which the transaction occurred in the real world
+          type: string
+          format: date-time
+        description:
+          description: User provided description of the entire transaction
+          type: string
+          example: Some transaction
+        tags:
+          description: A set of freeform key-value tags that users can add to a transaction
+        entries:
+          description: The list of entries that make up this transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionEntry'
+          minItems: 1
+          maxItems: 100
+      required:
+        - timeOccurred
+        - entries
+    TransactionEntry:
+      type: object
+      properties:
+        accountId:
+          description: The dot-separated account name the value is being added to
+          type: string
+          example: assets.bank.current
+          pattern: '^(?:[a-zA-Z0-9_\-]+\.)[a-zA-Z0-9_\-]+$'
+        currency:
+          description: The currency symbol for the entry
+          type: string
+          example: £
+        value:
+          description: The arbitrary-precision value of the transaction entry
+          type: string
+          example: '42.01'
+          nullable: true
+          format: '^[1-9][0-9]*(?:\.[0-9]+)?$'
+      required:
+        - currency
+        - accountId
+    AccountHistory:
+      type: object
+      properties:
+        initialValue:
+          description: The base value of the account before transactions are applied
+          type: string
+          example: '42.01'
+        entries:
+          description: The list of entries that make up this history view
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountHistoryEntry'
+    AccountHistoryEntry:
+      type: object
+      properties:
+        transactionId:
+          description: The transaction id
+          type: string
+          format: uuid
+        effectiveValue:
+          description: The value the entry adds to the account
+          type: string
+          example: '42.01'
+          format: '^[1-9][0-9]*(?:\.[0-9]+)?$'
+        affectedTotal:
+          description: The total value of the account after this entry
+          type: string
+          example: '42.01'
+          format: '^[1-9][0-9]*(?:\.[0-9]+)?$'
