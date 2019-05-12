@@ -38,4 +38,4 @@ jobs:
           root: artifacts
           paths:
             - schema.yaml
-            - *.jar
+            - '*.jar'
