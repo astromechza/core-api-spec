@@ -81,7 +81,7 @@ jobs:
             echo ${ENCODED_PRIVATE_KEY} | base64 -d > ~/.ssh/secure-key
             chmod 0600 ~/.ssh/secure-key
             ls -alh ~/.ssh/secure-key
-            export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/secure-key -o IdentitiesOnly=yes -vvv"
+            export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/secure-key -o IdentitiesOnly=yes"
 
             git push origin master --tags
 
@@ -93,7 +93,7 @@ jobs:
 
             # ready development branch
             git checkout develop
-            git merge --no-edit release
+            git merge --no-edit ${CIRCLE_BRANCH}
             mvn versions:set -DnewVersion="$DEV_VERSION"
             git add pom.xml
             git commit -m "ready for development: $DEV_VERSION"
