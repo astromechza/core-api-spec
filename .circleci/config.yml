@@ -76,9 +76,9 @@ jobs:
 
             # land on master and publish
             git checkout master
-            git merge --no-edit release
+            git merge --no-edit ${CIRCLE_BRANCH}
 
-            echo $ENCODED_PRIVATE_KEY | base64 -d | ssh-add
+            echo ${ENCODED_PRIVATE_KEY} | base64 -d | ssh-add
 
             git push origin master --tags
 
@@ -97,7 +97,7 @@ jobs:
             git push origin develop
 
             # clean up release branch
-            git push origin :release
+            git push origin :${CIRCLE_BRANCH}
 
 workflows:
   version: 2
