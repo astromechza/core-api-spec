@@ -33,3 +33,9 @@ jobs:
 
       - store_artifacts:
           path: ./artifacts/
+
+      - persist_to_workspace:
+          root: artifacts
+          paths:
+            - schema.yaml
+            - *.jar
