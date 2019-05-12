@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>one.aurelian</groupId>
-    <artifactId>core-api-spec-parent</artifactId>
+    <artifactId>core-api-schema-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>parent-project</name>
 
     <modules>
-        <module>spec</module>
+        <module>schema</module>
         <module>java-client</module>
     </modules>
 
