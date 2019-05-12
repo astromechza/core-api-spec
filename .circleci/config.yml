@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  package:
     docker:
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
@@ -30,3 +30,6 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run: mvn verify
+
+      - store_artifacts:
+          path: ./artifacts/
