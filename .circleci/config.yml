@@ -75,7 +75,7 @@ workflows:
           context: aurelian-one-bot
           filters:
             branches:
-              only: /^release.*$/
+              only: /^develop$/
       - deploy:
           requires:
             - build
