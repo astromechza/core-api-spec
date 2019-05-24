@@ -47,7 +47,8 @@ release: $(SSH_KEY)
 	@mvn versions:set -DnewVersion=$(dev_version)
 	@git add pom.xml **/pom.xml
 	@git commit -m "Changed: bumped pom version to $(dev_version)"
-	@git push origin develop
+	@GIT_SSH_COMMAND="ssh -i $(SSH_KEY) -o IdentitiesOnly=yes" \
+		git push origin develop
 
 $(SSH_KEY):
 ifndef ENCODED_PRIVATE_KEY
