@@ -16,7 +16,7 @@
     </modules>
 
     <properties>
-        <revision>1.0.9-SNAPSHOT</revision>
+        <revision>1.0.10-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -33,12 +33,12 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>jfrog-snapshots</id>
+            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/aurelian-one/maven-default/core-api-spec/</url>
         </repository>
     </distributionManagement>
 
