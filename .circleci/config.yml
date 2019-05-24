@@ -75,16 +75,14 @@ workflows:
     jobs:
       - build
       - release:
-          requires:
-            - build
-          context: aurelian-one-bot
+          context: aurelian-bot-git-creds
           filters:
             branches:
               only: /^develop$/
       - deploy:
           requires:
             - build
-          context: aurelian-one-bot
+          context: aurelian-maven-creds
           filters:
             branches:
               only: /^master$/

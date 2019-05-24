@@ -19,14 +19,20 @@ release: git_branch := $(shell git rev-parse --abbrev-ref HEAD)
 release: new_version = $(subst -SNAPSHOT,,$(old_version))
 release: dev_version = $(shell echo $(new_version) | cut -d '.' -f1,2).$(shell expr $(shell echo $(new_version) | cut -d '.' -f3) + 1)-SNAPSHOT
 release: $(SSH_KEY)
+ifndef CI_COMMIT_USER
+	$(error CI_COMMIT_USER is undefined)
+endif
+ifndef CI_COMMIT_EMAIL
+	$(error CI_COMMIT_EMAIL is undefined)
+endif
 	@echo Releasing $(old_version) from $(git_branch) as $(new_version) / $(dev_version)..
 	
 	# ensure dependencies use release versions
 	@mvn versions:use-releases
 
 	# setup git
-	@git config user.name "aurelian-one-bot [Via CircleCI]"
-	@git config user.email "aurelian-one-bot@ben.meierhost.com"
+	@git config user.name "$(CI_COMMIT_USER) [Via CircleCI]"
+	@git config user.email "$(CI_COMMIT_EMAIL)"
 
 	# write release version to POM
 	@mvn versions:set -DnewVersion=$(new_version)
@@ -51,9 +57,9 @@ release: $(SSH_KEY)
 		git push origin master --tags
 
 $(SSH_KEY):
-ifndef ENCODED_PRIVATE_KEY
-	$(error ENCODED_PRIVATE_KEY is undefined)
+ifndef CI_COMMIT_KEY
+	$(error CI_COMMIT_KEY is undefined)
 endif
-	@echo $${ENCODED_PRIVATE_KEY} | base64 -d > $@
+	@echo $${CI_COMMIT_KEY} | base64 -d > $@
 	@chmod 0600 $@
 	@ls -alh $@
