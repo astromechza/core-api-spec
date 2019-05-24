@@ -24,13 +24,12 @@ release: $(SSH_KEY)
 	# ensure dependencies use release versions
 	@mvn versions:use-releases
 
-	# write release version to POM
-	@mvn versions:set -DnewVersion=$(new_version)
-
 	# setup git
 	@git config user.name "aurelian-one-bot [Via CircleCI]"
 	@git config user.email "aurelian-one-bot@ben.meierhost.com"
 
+	# write release version to POM
+	@mvn versions:set -DnewVersion=$(new_version)
 	@git add pom.xml **/pom.xml
 	@git commit -m "Release: $(new_version)"
 	@git tag "$(new_version)"
@@ -39,16 +38,17 @@ release: $(SSH_KEY)
 	@git checkout master
 	@git merge --no-edit $(git_branch)
 
-	@GIT_SSH_COMMAND="ssh -i $(SSH_KEY) -o IdentitiesOnly=yes" \
-		git push origin master --tags
-
+	# write development version to POM
 	@git checkout develop
 	@git merge --no-edit $(git_branch)
 	@mvn versions:set -DnewVersion=$(dev_version)
 	@git add pom.xml **/pom.xml
 	@git commit -m "Changed: bumped pom version to $(dev_version)"
-	@GIT_SSH_COMMAND="ssh -i $(SSH_KEY) -o IdentitiesOnly=yes" \
-		git push origin develop
+
+	# now push branches
+	@export GIT_SSH_COMMAND="ssh -i $(SSH_KEY) -o IdentitiesOnly=yes" &&\
+		git push origin develop &&\
+		git push origin master --tags
 
 $(SSH_KEY):
 ifndef ENCODED_PRIVATE_KEY
