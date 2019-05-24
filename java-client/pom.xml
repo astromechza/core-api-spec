@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>java-client</artifactId>
-    <version>${project.parent.version}</version>
+    <version>${revision}</version>
     <name>java-client</name>
     <packaging>jar</packaging>
 
