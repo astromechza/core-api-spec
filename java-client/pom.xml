@@ -7,12 +7,12 @@
     <parent>
         <groupId>one.aurelian</groupId>
         <artifactId>core-api-schema-parent</artifactId>
-        <version>1.0.17-SNAPSHOT</version>
+        <version>1.0.18-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>core-java-client</artifactId>
-    <version>1.0.17-SNAPSHOT</version>
+    <version>1.0.18-SNAPSHOT</version>
     <name>core-java-client</name>
     <packaging>jar</packaging>
 
@@ -113,7 +113,7 @@
                     <dependency>
                         <groupId>${project.groupId}</groupId>
                         <artifactId>core-api-schema</artifactId>
-                        <version>1.0.17-SNAPSHOT</version>
+                        <version>1.0.18-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
                 <executions>
