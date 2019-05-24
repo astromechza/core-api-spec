@@ -24,10 +24,6 @@
         </license>
     </licenses>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
-
     <dependencies>
         <!-- dependencies are needed for the client being generated -->
 
