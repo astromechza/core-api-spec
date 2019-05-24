@@ -6,7 +6,7 @@
 
     <groupId>one.aurelian</groupId>
     <artifactId>core-api-schema-parent</artifactId>
-    <version>1.0.15</version>
+    <version>1.0.16-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>parent-project</name>
 
