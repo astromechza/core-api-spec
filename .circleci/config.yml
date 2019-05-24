@@ -62,7 +62,7 @@ jobs:
             git config user.email "aurelian-one-bot@ben.meierhost.com"
 
             # commit and tag
-            git add **/pom.xml
+            git add pom.xml **/pom.xml
             git commit -m "Release: $NEW_VERSION"
             git tag "$NEW_VERSION"
 
@@ -88,7 +88,7 @@ jobs:
             git checkout develop
             git merge --no-edit ${CIRCLE_BRANCH}
             mvn versions:set -DnewVersion=${DEV_VERSION}
-            git add **/pom.xml
+            git add pom.xml **/pom.xml
             git commit -m "Changed: bumped pom version to $DEV_VERSION"
             git push origin develop
 
