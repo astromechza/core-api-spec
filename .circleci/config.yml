@@ -48,6 +48,7 @@ jobs:
       - run:
           name: optionally release to master
           command: |
+            env | cut -d'=' -f1
             if [ "${DO_VERSION_RELEASE}" == "true" ]; then
               make release
             fi
