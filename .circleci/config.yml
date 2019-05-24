@@ -55,7 +55,7 @@ jobs:
             mvn versions:use-releases
 
             # write release version to POM
-            sed -i "s,<revision>$OLD_VERSION</revision>,<revision>$NEW_VERSION</revision>," pom.xml
+            mvn versions:set -DnewVersion=${NEW_VERSION}
 
             # setup git
             git config user.name "aurelian-one-bot [Via CircleCI]"
@@ -87,7 +87,7 @@ jobs:
             # ready development branch
             git checkout develop
             git merge --no-edit ${CIRCLE_BRANCH}
-            sed -i "s,<revision>$NEW_VERSION</revision>,<revision>$DEV_VERSION</revision>," pom.xml
+            mvn versions:set -DnewVersion=${DEV_VERSION}
             git add pom.xml
             git commit -m "Changed: bumped pom version to $DEV_VERSION"
             git push origin develop
