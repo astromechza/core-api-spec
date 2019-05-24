@@ -62,7 +62,7 @@ jobs:
             git config user.email "aurelian-one-bot@ben.meierhost.com"
 
             # commit and tag
-            git add pom.xml
+            git add pom.xml java-client/pom.xml schema/pom.xml
             git commit -m "Release: $NEW_VERSION"
             git tag "$NEW_VERSION"
 
