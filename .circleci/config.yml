@@ -31,6 +31,13 @@ jobs:
 
       - run: mvn verify
 
+      - run:
+          name: deploy if master
+          command: |
+            if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
+              mvn deploy
+            fi
+
       - store_artifacts:
           path: ./artifacts/
 
@@ -39,6 +46,7 @@ jobs:
           paths:
             - schema.yaml
             - '*.jar'
+
   release:
     docker:
       - image: circleci/openjdk:8-jdk

@@ -11,10 +11,22 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>java-client</artifactId>
+    <artifactId>core-java-client</artifactId>
     <version>${revision}</version>
-    <name>java-client</name>
+    <name>core-java-client</name>
     <packaging>jar</packaging>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
 
     <dependencies>
         <!-- dependencies are needed for the client being generated -->
@@ -115,7 +127,7 @@
 
                             <configOptions>
                                 <groupId>one.aurelian</groupId>
-                                <artifactId>core-client</artifactId>
+                                <artifactId>core-java-client</artifactId>
                                 <invokerPackage>one.aurelian.client</invokerPackage>
                                 <apiPackage>one.aurelian.client.api</apiPackage>
                                 <modelPackage>one.aurelian.client.model</modelPackage>
@@ -128,24 +140,30 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <inherited>false</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <tasks>
-                                <copy todir="${project.basedir}/../artifacts">
-                                    <fileset dir="target/">
-                                        <include name="*.jar"/>
-                                    </fileset>
-                                </copy>
-                            </tasks>
-                        </configuration>
+                    <id>attach-sources</id>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
                     </execution>
                 </executions>
             </plugin>
