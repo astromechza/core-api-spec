@@ -38,15 +38,6 @@ jobs:
               mvn deploy
             fi
 
-      - store_artifacts:
-          path: ./artifacts/
-
-      - persist_to_workspace:
-          root: artifacts
-          paths:
-            - schema.yaml
-            - '*.jar'
-
   release:
     docker:
       - image: circleci/openjdk:8-jdk
