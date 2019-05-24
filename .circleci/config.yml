@@ -45,7 +45,12 @@ jobs:
             - v1-dependencies-{{ checksum "pom.xml" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: make release
+      - run:
+          name: optionally release to master
+          command: |
+            if [ "${DO_VERSION_RELEASE}" == "true" ]; then
+              make release
+            fi
 
   deploy:
     docker:

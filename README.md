@@ -12,11 +12,11 @@ This is done to separate the interface (the api) from the implementation (the ap
 
 https://github.com/orgs/aurelian-one/projects/1?card_filter_query=repo%3Aaurelian-one%2Fcore-api-spec
 
-
 ## How to trigger a release from develop to master
 
 ```
 $ curl -u <CIRCLE API TOKEN>: \
     -d 'build_parameters[CIRCLE_JOB]=release' \
+    -d 'build_parameters[DO_VERSION_RELEASE]=true' \
     https://circleci.com/api/v1.1/project/github/aurelian-one/core-api-spec/tree/develop
 ```
