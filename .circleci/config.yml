@@ -31,14 +31,13 @@ jobs:
 
       - run: mvn verify
 
-      - store_artifacts:
-          path: ./artifacts/
+      - run:
+          name: deploy if master
+          command: |
+            if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
+              mvn deploy
+            fi
 
-      - persist_to_workspace:
-          root: artifacts
-          paths:
-            - schema.yaml
-            - '*.jar'
   release:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -71,7 +70,7 @@ jobs:
 
             # commit and tag
             git add pom.xml
-            git commit -m "release: $NEW_VERSION"
+            git commit -m "Release: $NEW_VERSION"
             git tag "$NEW_VERSION"
 
             # land on master and publish
@@ -97,7 +96,7 @@ jobs:
             git merge --no-edit ${CIRCLE_BRANCH}
             sed -i "s,<revision>$NEW_VERSION</revision>,<revision>$DEV_VERSION</revision>," pom.xml
             git add pom.xml
-            git commit -m "ready for development: $DEV_VERSION"
+            git commit -m "Changed: bumped pom version to $DEV_VERSION"
             git push origin develop
 
 workflows:
