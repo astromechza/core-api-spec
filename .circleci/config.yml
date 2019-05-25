@@ -82,4 +82,4 @@ workflows:
           context: aurelian-bot-git-creds
           filters:
             branches:
-              only: /^release*$/
+              only: /^release.*$/
