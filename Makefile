@@ -51,6 +51,9 @@ endif
 	@git add pom.xml **/pom.xml
 	@git commit -m "Changed: bumped pom version to $(dev_version)"
 
+	@git config --unset --local user.name
+	@git config --unset --local user.email
+
 	# now push branches
 	@export GIT_SSH_COMMAND="ssh -i $(SSH_KEY) -o IdentitiesOnly=yes" &&\
 		git push origin develop &&\
