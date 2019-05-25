@@ -7,6 +7,9 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
+servers:
+  - url: https://localhost/v1
+    description: Uses data from localhost server
 externalDocs:
   description: Project Docs
   url: 'https://aurelian.one'
@@ -140,6 +143,9 @@ components:
           example: Some transaction
         tags:
           description: A set of freeform key-value tags that users can add to a transaction
+          type: object
+          additionalProperties:
+            type: string
         entries:
           description: The list of entries that make up this transaction
           type: array
