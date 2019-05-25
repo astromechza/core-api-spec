@@ -11,8 +11,8 @@
     <name>parent-project</name>
 
     <modules>
-        <module>schema</module>
-        <module>java-client</module>
+        <module>core-api-schema</module>
+        <module>example-java-client</module>
     </modules>
 
     <properties>

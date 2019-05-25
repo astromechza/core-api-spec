@@ -11,10 +11,14 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>core-java-client</artifactId>
+    <artifactId>example-java-client</artifactId>
     <version>1.1.1-SNAPSHOT</version>
-    <name>core-java-client</name>
+    <name>example-java-client</name>
     <packaging>jar</packaging>
+
+    <properties>
+        <packagepath>${project.parent.groupId}.exampleclient</packagepath>
+    </properties>
 
     <licenses>
         <license>
@@ -25,6 +29,12 @@
     </licenses>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>core-api-schema</artifactId>
+            <version>1.1.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- dependencies are needed for the client being generated -->
 
         <dependency>
@@ -67,9 +77,14 @@
             <version>${jackson-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.joschi.jackson</groupId>
-            <artifactId>jackson-datatype-threetenbp</artifactId>
-            <version>${threetenbp-version}</version>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-version}</version>
         </dependency>
 
         <!-- Base64 encoding that works in both JVM and Android -->
@@ -83,39 +98,55 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.parent.groupId}</groupId>
+                                    <artifactId>core-api-schema</artifactId>
+                                    <outputDirectory>target/core-api-schema</outputDirectory>
+                                    <includes>schema.yaml</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>3.3.4</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>core-api-schema</artifactId>
-                        <version>1.1.1-SNAPSHOT</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/../schema/src/main/resources/schema.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/target/core-api-schema/schema.yaml</inputSpec>
                             <generatorName>java</generatorName>
 
                             <configOptions>
-                                <groupId>one.aurelian</groupId>
-                                <artifactId>core-java-client</artifactId>
-                                <invokerPackage>one.aurelian.client</invokerPackage>
-                                <apiPackage>one.aurelian.client.api</apiPackage>
-                                <modelPackage>one.aurelian.client.model</modelPackage>
+                                <groupId>${project.parent.groupId}</groupId>
+                                <artifactId>${project.artifactId}</artifactId>
+                                <invokerPackage>${packagepath}</invokerPackage>
+                                <apiPackage>${packagepath}.api</apiPackage>
+                                <modelPackage>${packagepath}.model</modelPackage>
                                 <strictSpec>true</strictSpec>
                                 <library>jersey2</library>
+                                <dateLibrary>java8</dateLibrary>
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

@@ -8,9 +8,11 @@ OpenAPIv3 core specification of the API used between various clients (such as Ty
 
 This is done to separate the interface (the api) from the implementation (the api server itself). This helps to keep clients compatible with servers and prevent servers from making incompatible API changes.
 
-## Todo and task tracking
+For an example of generating a client see the [example-java-client](./example-java-client/pom.xml) which does the following as part of its build process:
 
-https://github.com/orgs/aurelian-one/projects/1?card_filter_query=repo%3Aaurelian-one%2Fcore-api-spec
+1. Unpack swagger schema from core-api-schema dependency
+2. Use openapi generator to generate java client code
+3. Package as `example-java-client` module
 
 ## How to trigger a release from develop to master
 
