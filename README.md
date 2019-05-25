@@ -14,9 +14,4 @@ https://github.com/orgs/aurelian-one/projects/1?card_filter_query=repo%3Aaurelia
 
 ## How to trigger a release from develop to master
 
-```
-$ curl -u <CIRCLE API TOKEN>: \
-    -d 'build_parameters[CIRCLE_JOB]=release' \
-    -d 'build_parameters[DO_VERSION_RELEASE]=true' \
-    https://circleci.com/api/v1.1/project/github/aurelian-one/core-api-spec/tree/develop
-```
+Cut a branch off develop named `release-<whatever>` and push it, CircleCI should use this to trigger the release process if your user has the correct permissions.

@@ -45,13 +45,7 @@ jobs:
             - v1-dependencies-{{ checksum "pom.xml" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run:
-          name: optionally release to master
-          command: |
-            env | cut -d'=' -f1
-            if [ "${DO_VERSION_RELEASE}" == "true" ]; then
-              make release
-            fi
+      - run: make release
 
   deploy:
     docker:
@@ -75,11 +69,6 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - release:
-          context: aurelian-bot-git-creds
-          filters:
-            branches:
-              only: /^develop$/
       - deploy:
           requires:
             - build
@@ -87,3 +76,8 @@ workflows:
           filters:
             branches:
               only: /^master$/
+      - release:
+          context: aurelian-bot-git-creds
+          filters:
+            branches:
+              only: /^release*$/
