@@ -17,8 +17,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
 
         <!-- dependency versions -->
         <swagger-annotations-version>1.5.8</swagger-annotations-version>
@@ -26,6 +24,7 @@
         <jackson-version>2.9.9</jackson-version>
         <jodatime-version>2.7</jodatime-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
+        <threetenbp-version>2.6.4</threetenbp-version>
         <junit-version>4.8.1</junit-version>
     </properties>
 
@@ -58,7 +57,7 @@
                                     <version>3.6.0</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>1.8</version>
+                                    <version>1.10</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
