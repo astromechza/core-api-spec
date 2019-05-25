@@ -77,6 +77,8 @@ workflows:
             branches:
               only: /^master$/
       - release:
+          requires:
+            - build
           context: aurelian-bot-git-creds
           filters:
             branches:
